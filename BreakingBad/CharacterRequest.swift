@@ -19,4 +19,10 @@ struct CharacterRequest {
         }
         return URLRequest(url: url)
     }
+    
+    func parseResponse(data: Data) throws -> [BBCharacter] {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .custom(BBCharacter.codingKeyMapper)
+        return try decoder.decode([BBCharacter].self, from: data)
+    }
 }

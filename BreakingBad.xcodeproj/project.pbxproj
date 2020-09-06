@@ -10,6 +10,8 @@
 		4D227F0A250522CC00909D8A /* CharacterRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D227F09250522CC00909D8A /* CharacterRequestTests.swift */; };
 		4D227F0C2505236C00909D8A /* CharacterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D227F0B2505236C00909D8A /* CharacterRequest.swift */; };
 		4D227F0E2505243600909D8A /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D227F0D2505243600909D8A /* RequestError.swift */; };
+		4D227F11250525E500909D8A /* BBCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D227F10250525E500909D8A /* BBCharacter.swift */; };
+		4D227F13250526EF00909D8A /* GenericCodingKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D227F12250526EF00909D8A /* GenericCodingKeys.swift */; };
 		4DFA185624F41DEB00AE9569 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA185524F41DEB00AE9569 /* AppDelegate.swift */; };
 		4DFA185824F41DEB00AE9569 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA185724F41DEB00AE9569 /* SceneDelegate.swift */; };
 		4DFA185A24F41DEB00AE9569 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA185924F41DEB00AE9569 /* ContentView.swift */; };
@@ -40,6 +42,8 @@
 		4D227F09250522CC00909D8A /* CharacterRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterRequestTests.swift; sourceTree = "<group>"; };
 		4D227F0B2505236C00909D8A /* CharacterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterRequest.swift; sourceTree = "<group>"; };
 		4D227F0D2505243600909D8A /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
+		4D227F10250525E500909D8A /* BBCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBCharacter.swift; sourceTree = "<group>"; };
+		4D227F12250526EF00909D8A /* GenericCodingKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCodingKeys.swift; sourceTree = "<group>"; };
 		4DFA185224F41DEB00AE9569 /* BreakingBad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakingBad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DFA185524F41DEB00AE9569 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4DFA185724F41DEB00AE9569 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 		4D227F0F2505243D00909D8A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4D227F12250526EF00909D8A /* GenericCodingKeys.swift */,
 				4D227F0D2505243600909D8A /* RequestError.swift */,
 			);
 			path = Utilities;
@@ -113,6 +118,7 @@
 			children = (
 				4DFA185524F41DEB00AE9569 /* AppDelegate.swift */,
 				4DFA185B24F41DED00AE9569 /* Assets.xcassets */,
+				4D227F10250525E500909D8A /* BBCharacter.swift */,
 				4D227F0B2505236C00909D8A /* CharacterRequest.swift */,
 				4DFA185924F41DEB00AE9569 /* ContentView.swift */,
 				4DFA186324F41DEE00AE9569 /* Info.plist */,
@@ -135,8 +141,8 @@
 		4DFA186B24F41DEE00AE9569 /* BreakingBadTests */ = {
 			isa = PBXGroup;
 			children = (
-				4DFA186E24F41DEE00AE9569 /* Info.plist */,
 				4D227F09250522CC00909D8A /* CharacterRequestTests.swift */,
+				4DFA186E24F41DEE00AE9569 /* Info.plist */,
 			);
 			path = BreakingBadTests;
 			sourceTree = "<group>";
@@ -283,6 +289,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DFA185624F41DEB00AE9569 /* AppDelegate.swift in Sources */,
+				4D227F11250525E500909D8A /* BBCharacter.swift in Sources */,
+				4D227F13250526EF00909D8A /* GenericCodingKeys.swift in Sources */,
 				4D227F0E2505243600909D8A /* RequestError.swift in Sources */,
 				4DFA185824F41DEB00AE9569 /* SceneDelegate.swift in Sources */,
 				4DFA185A24F41DEB00AE9569 /* ContentView.swift in Sources */,
