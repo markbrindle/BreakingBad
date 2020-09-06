@@ -100,12 +100,12 @@
 			isa = PBXGroup;
 			children = (
 				4DFA185524F41DEB00AE9569 /* AppDelegate.swift */,
-				4DFA185724F41DEB00AE9569 /* SceneDelegate.swift */,
-				4DFA185924F41DEB00AE9569 /* ContentView.swift */,
 				4DFA185B24F41DED00AE9569 /* Assets.xcassets */,
-				4DFA186024F41DED00AE9569 /* LaunchScreen.storyboard */,
+				4DFA185924F41DEB00AE9569 /* ContentView.swift */,
 				4DFA186324F41DEE00AE9569 /* Info.plist */,
+				4DFA186024F41DED00AE9569 /* LaunchScreen.storyboard */,
 				4DFA185D24F41DED00AE9569 /* Preview Content */,
+				4DFA185724F41DEB00AE9569 /* SceneDelegate.swift */,
 			);
 			path = BreakingBad;
 			sourceTree = "<group>";
