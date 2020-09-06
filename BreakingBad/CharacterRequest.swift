@@ -26,3 +26,5 @@ struct CharacterRequest {
         return try decoder.decode([BBCharacter].self, from: data)
     }
 }
+
+extension CharacterRequest: APIRequest {}
