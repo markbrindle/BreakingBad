@@ -42,6 +42,14 @@ class CharactersController: ObservableObject {
             
         }
     }
+    
+    func filteredCharacters(with characterName: String? = nil, season: Int? = nil) -> [BBCharacter] {
+        let filtered = characters.filter { $0.contains(characterName) }
+        if let season = season {
+            return Array(filtered.filter { $0.appearances.contains(season) } )
+        }
+        return filtered
+    }
 }
 
 extension CharactersController {

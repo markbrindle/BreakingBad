@@ -40,6 +40,78 @@ class CharacterControllerTests: XCTestCase {
         // Then character data is published
         wait(for: [result.expectation], timeout: 1)
     }
+    
+    func testFilterCharactersByName() {
+        // Given several characters
+        let characters = [
+            BBCharacter(char_id: 1, name: "Walter White", birthday: "01 01 1970", occupations: ["Hih School Chemistry Teacher", "Meth Kin Pin"], status: "Alive", nickname: "Walt", imageURL: "", appearances: [1,2,3,4,5] ),
+            BBCharacter(char_id: 11, name: "Domingo Molina", birthday: "Unknown", occupations: ["Meth Distributor"], status: "Deceased", nickname: "Krazy-8", imageURL: "https://vignette.wikia.nocookie.net/breakingbad/images/e/e7/Krazy8.png/revision/latest?cb=20130208041554", appearances: [1] ),
+            BBCharacter(char_id: 39, name: "Holly White", birthday: "Unknown", occupations: ["Infant"], status: "Alive", nickname: "Holly", imageURL: "https://pmctvline2.files.wordpress.com/2013/09/breaking-bad-elanor-anne-wenrich-325.jpg?w=325&h=240", appearances: [2, 3, 4, 5] ),
+        ]
+        let controller = CharactersController(_characters: Published(initialValue: characters))
+        
+        // When filtering by name white
+        let filteredResults = controller.filteredCharacters(with:"white")
+        
+        // Then filteredResults should hold two characters
+        XCTAssertEqual(filteredResults.count, 2, "Expected Walter White & Holly White")
+    }
+
+    func testFilterCharactersBySeason2() {
+        // Given several characters
+        let characters = [
+            BBCharacter(char_id: 1, name: "Walter White", birthday: "01 01 1970", occupations: ["Hih School Chemistry Teacher", "Meth Kin Pin"], status: "Alive", nickname: "Walt", imageURL: "", appearances: [1,2,3,4,5] ),
+            BBCharacter(char_id: 11, name: "Domingo Molina", birthday: "Unknown", occupations: ["Meth Distributor"], status: "Deceased", nickname: "Krazy-8", imageURL: "https://vignette.wikia.nocookie.net/breakingbad/images/e/e7/Krazy8.png/revision/latest?cb=20130208041554", appearances: [1] ),
+            BBCharacter(char_id: 12, name: "Tuco Salamanca", birthday: "Unknown", occupations: ["Meth Distributor"], status: "Deceased", nickname: "Tuco", imageURL: "https://vignette.wikia.nocookie.net/breakingbad/images/a/a7/Tuco_BCS.jpg/revision/latest?cb=20170810082445", appearances: [1, 2] ),
+            BBCharacter(char_id: 13, name: "Marco & Leonel Salamanca", birthday: "Unknown", occupations: ["Cartel Hitman"], status: "Deceased", nickname: "The Cousins", imageURL: "https://images.amcnetworks.com/amc.com/wp-content/uploads/2015/04/cast_bb_700x1000_the-cousins-lg.jpg", appearances: [3] ),
+            BBCharacter(char_id: 39, name: "Holly White", birthday: "Unknown", occupations: ["Infant"], status: "Alive", nickname: "Holly", imageURL: "https://pmctvline2.files.wordpress.com/2013/09/breaking-bad-elanor-anne-wenrich-325.jpg?w=325&h=240", appearances: [2, 3, 4, 5] ),
+        ]
+        let controller = CharactersController(_characters: Published(initialValue: characters))
+        
+        // When filtering by season 2
+        let season2Results = controller.filteredCharacters(season: 2)
+        
+        // Then filteredResults should hold three characters
+        XCTAssertEqual(season2Results.count, 3, "Expected Walter, Tuco, and Holly")
+    }
+
+    func testFilterCharactersBySeason3() {
+        // Given several characters
+        let characters = [
+            BBCharacter(char_id: 1, name: "Walter White", birthday: "01 01 1970", occupations: ["Hih School Chemistry Teacher", "Meth Kin Pin"], status: "Alive", nickname: "Walt", imageURL: "", appearances: [1,2,3,4,5] ),
+            BBCharacter(char_id: 11, name: "Domingo Molina", birthday: "Unknown", occupations: ["Meth Distributor"], status: "Deceased", nickname: "Krazy-8", imageURL: "https://vignette.wikia.nocookie.net/breakingbad/images/e/e7/Krazy8.png/revision/latest?cb=20130208041554", appearances: [1] ),
+            BBCharacter(char_id: 12, name: "Tuco Salamanca", birthday: "Unknown", occupations: ["Meth Distributor"], status: "Deceased", nickname: "Tuco", imageURL: "https://vignette.wikia.nocookie.net/breakingbad/images/a/a7/Tuco_BCS.jpg/revision/latest?cb=20170810082445", appearances: [1, 2] ),
+            BBCharacter(char_id: 13, name: "Marco & Leonel Salamanca", birthday: "Unknown", occupations: ["Cartel Hitman"], status: "Deceased", nickname: "The Cousins", imageURL: "https://images.amcnetworks.com/amc.com/wp-content/uploads/2015/04/cast_bb_700x1000_the-cousins-lg.jpg", appearances: [3] ),
+            BBCharacter(char_id: 39, name: "Holly White", birthday: "Unknown", occupations: ["Infant"], status: "Alive", nickname: "Holly", imageURL: "https://pmctvline2.files.wordpress.com/2013/09/breaking-bad-elanor-anne-wenrich-325.jpg?w=325&h=240", appearances: [2, 3, 4, 5] ),
+        ]
+        let controller = CharactersController(_characters: Published(initialValue: characters))
+        
+        // When filtering by season 3
+        let season3Results = controller.filteredCharacters(season: 3)
+        
+        // Then filteredResults should hold three characters
+        XCTAssertEqual(season3Results.count, 3, "Expected Walter, Marco & Leonel, and Holly")
+    }
+
+    func testFilterCharactersByNameAndSeason() {
+        // Given several characters
+        let characters = [
+            BBCharacter(char_id: 1, name: "Walter White", birthday: "01 01 1970", occupations: ["Hih School Chemistry Teacher", "Meth Kin Pin"], status: "Alive", nickname: "Walt", imageURL: "", appearances: [1,2,3,4,5] ),
+            BBCharacter(char_id: 11, name: "Domingo Molina", birthday: "Unknown", occupations: ["Meth Distributor"], status: "Deceased", nickname: "Krazy-8", imageURL: "https://vignette.wikia.nocookie.net/breakingbad/images/e/e7/Krazy8.png/revision/latest?cb=20130208041554", appearances: [1] ),
+            BBCharacter(char_id: 12, name: "Tuco Salamanca", birthday: "Unknown", occupations: ["Meth Distributor"], status: "Deceased", nickname: "Tuco", imageURL: "https://vignette.wikia.nocookie.net/breakingbad/images/a/a7/Tuco_BCS.jpg/revision/latest?cb=20170810082445", appearances: [1, 2] ),
+            BBCharacter(char_id: 13, name: "Marco & Leonel Salamanca", birthday: "Unknown", occupations: ["Cartel Hitman"], status: "Deceased", nickname: "The Cousins", imageURL: "https://images.amcnetworks.com/amc.com/wp-content/uploads/2015/04/cast_bb_700x1000_the-cousins-lg.jpg", appearances: [3] ),
+            BBCharacter(char_id: 39, name: "Holly White", birthday: "Unknown", occupations: ["Infant"], status: "Alive", nickname: "Holly", imageURL: "https://pmctvline2.files.wordpress.com/2013/09/breaking-bad-elanor-anne-wenrich-325.jpg?w=325&h=240", appearances: [2, 3, 4, 5] ),
+        ]
+        let controller = CharactersController(_characters: Published(initialValue: characters))
+        
+        // When filtering by name & season
+        let nameAndSeasonResults = controller.filteredCharacters(with: "co", season: 3)
+        
+        // Then filteredResults should hold one character
+        XCTAssertEqual(nameAndSeasonResults.count, 1, "Expected Marco & Leonel only")
+        let character = nameAndSeasonResults.first!
+        XCTAssertEqual(character.name, "Marco & Leonel Salamanca", "Wrong character retrieved")
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

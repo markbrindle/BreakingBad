@@ -33,3 +33,17 @@ struct BBCharacter {
 }
 
 extension BBCharacter: Decodable {}
+
+extension BBCharacter {
+    func contains(_ filter: String?) -> Bool {
+        guard let filterText = filter else {
+            return true
+        }
+        if filterText.isEmpty {
+            return true
+        }
+
+        return name.lowercased().contains(filterText.lowercased())
+    }
+}
+
