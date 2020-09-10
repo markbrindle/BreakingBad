@@ -34,53 +34,6 @@ struct ContentView: View {
     }
 }
 
-struct MasterView: View {
-    @EnvironmentObject var controller: CharactersController
-    @Binding var selectedCharacterId: String?
-    
-    // Filtering
-    @State private var filter: String = ""
-    @State private var season: Int? = nil
-    
-    var body: some View {
-        let filteredCharacters = controller.filteredCharacters(with: filter, season: season)
-        return VStack(alignment:.leading, spacing: 8) {
-            Text("Season filter")
-                .font(.title)
-                .padding([.leading])
-            ScrollView(.horizontal) {
-                HStack {
-                    filterButton(label: "All")
-                    filterButton(label: "Season 1")
-                    filterButton(label: "Season 2")
-                    filterButton(label: "Season 3")
-                    filterButton(label: "Season 4")
-                    filterButton(label: "Season 5")
-                }
-            }.padding([.leading, .trailing])
-            SearchBar(text: $filter)
-            List(filteredCharacters, id: \.self) { character in
-                NavigationLink(destination: DetailView(selectedCharacterId: self.$selectedCharacterId),
-                               tag: "\(character.char_id)", selection: self.$selectedCharacterId ) {
-                                Text("\(character.name)")
-                }.onTapGesture {
-                    self.selectedCharacterId = "\(character.char_id)"
-                }
-            }
-        }
-    }
-    
-    fileprivate func filterButton(label: String) -> some View {
-        return Button(label) {
-            self.season = Int(String(label.last!))
-        }
-        .padding(6)
-        .frame(minWidth: 44)
-        .cornerRadius(8)
-        .shadow(radius: 4)
-    }
-}
-
 struct DetailView: View {
 
     @EnvironmentObject var controller: CharactersController

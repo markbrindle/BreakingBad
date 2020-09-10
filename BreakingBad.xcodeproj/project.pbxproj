@@ -21,6 +21,8 @@
 		4DB406D42507F94500643636 /* CharactersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB406D32507F94500643636 /* CharactersController.swift */; };
 		4DB406D62507FB1B00643636 /* CharactersRawData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB406D52507FB1B00643636 /* CharactersRawData.swift */; };
 		4DB40734250ACAB900643636 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB40733250ACAB900643636 /* SearchBar.swift */; };
+		4DB40736250ACDEC00643636 /* MasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB40735250ACDEC00643636 /* MasterView.swift */; };
+		4DB40738250ACF7500643636 /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB40737250ACF7500643636 /* Binding+Extension.swift */; };
 		4DFA185624F41DEB00AE9569 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA185524F41DEB00AE9569 /* AppDelegate.swift */; };
 		4DFA185824F41DEB00AE9569 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA185724F41DEB00AE9569 /* SceneDelegate.swift */; };
 		4DFA185A24F41DEB00AE9569 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA185924F41DEB00AE9569 /* ContentView.swift */; };
@@ -62,6 +64,8 @@
 		4DB406D32507F94500643636 /* CharactersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersController.swift; sourceTree = "<group>"; };
 		4DB406D52507FB1B00643636 /* CharactersRawData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersRawData.swift; sourceTree = "<group>"; };
 		4DB40733250ACAB900643636 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		4DB40735250ACDEC00643636 /* MasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterView.swift; sourceTree = "<group>"; };
+		4DB40737250ACF7500643636 /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		4DFA185224F41DEB00AE9569 /* BreakingBad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakingBad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DFA185524F41DEB00AE9569 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4DFA185724F41DEB00AE9569 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -147,12 +151,14 @@
 				4DFA185524F41DEB00AE9569 /* AppDelegate.swift */,
 				4DFA185B24F41DED00AE9569 /* Assets.xcassets */,
 				4D227F10250525E500909D8A /* BBCharacter.swift */,
+				4DB40737250ACF7500643636 /* Binding+Extension.swift */,
 				4D227F0B2505236C00909D8A /* CharacterRequest.swift */,
 				4DB406D32507F94500643636 /* CharactersController.swift */,
 				4DFA185924F41DEB00AE9569 /* ContentView.swift */,
 				4DB406D7250805C700643636 /* Fallback */,
 				4DFA186324F41DEE00AE9569 /* Info.plist */,
 				4DFA186024F41DED00AE9569 /* LaunchScreen.storyboard */,
+				4DB40735250ACDEC00643636 /* MasterView.swift */,
 				4DFA185D24F41DED00AE9569 /* Preview Content */,
 				4DFA185724F41DEB00AE9569 /* SceneDelegate.swift */,
 				4DB40733250ACAB900643636 /* SearchBar.swift */,
@@ -331,10 +337,12 @@
 				4DB40734250ACAB900643636 /* SearchBar.swift in Sources */,
 				4D227F1925052EA400909D8A /* APIRequestLoader.swift in Sources */,
 				4D227F0E2505243600909D8A /* RequestError.swift in Sources */,
+				4DB40736250ACDEC00643636 /* MasterView.swift in Sources */,
 				4DFA185824F41DEB00AE9569 /* SceneDelegate.swift in Sources */,
 				4DFA185A24F41DEB00AE9569 /* ContentView.swift in Sources */,
 				4D227F1B25052EEF00909D8A /* APIRequest.swift in Sources */,
 				4D227F0C2505236C00909D8A /* CharacterRequest.swift in Sources */,
+				4DB40738250ACF7500643636 /* Binding+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
