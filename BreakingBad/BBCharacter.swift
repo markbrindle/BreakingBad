@@ -47,3 +47,13 @@ extension BBCharacter {
     }
 }
 
+extension BBCharacter: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(char_id)
+    }
+
+    static func == (lhs: BBCharacter, rhs: BBCharacter) -> Bool {
+        lhs.char_id == rhs.char_id
+    }
+}
+
