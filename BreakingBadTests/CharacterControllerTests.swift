@@ -9,6 +9,12 @@
 import XCTest
 @testable import BreakingBad
 import SwiftUI
+import Combine
+
+// Allows test to remove an existing character image
+extension CharactersController {
+    func removeImage(id: Int) { images[id] = nil }
+}
 
 class CharacterControllerTests: XCTestCase {
 
@@ -112,11 +118,87 @@ class CharacterControllerTests: XCTestCase {
         let character = nameAndSeasonResults.first!
         XCTAssertEqual(character.name, "Marco & Leonel Salamanca", "Wrong character retrieved")
     }
+    
+    func testCharacterImageReturnsAPlaceholderWhenNoImageHasBeenDownloaded() {
+        // Given some characters, a mock and a placeholder image
+        let characters = [
+            BBCharacter(char_id: 12, name: "Tuco Salamanca", birthday: "Unknown", occupations: ["Meth Distributor"], status: "Deceased", nickname: "Tuco", imageURL: "https://vignette.wikia.nocookie.net/breakingbad/images/a/a7/Tuco_BCS.jpg/revision/latest?cb=20170810082445", appearances: [1, 2] ),
+            BBCharacter(char_id: 13, name: "Marco & Leonel Salamanca", birthday: "Unknown", occupations: ["Cartel Hitman"], status: "Deceased", nickname: "The Cousins", imageURL: "https://images.amcnetworks.com/amc.com/wp-content/uploads/2015/04/cast_bb_700x1000_the-cousins-lg.jpg", appearances: [3] ),
+            BBCharacter(char_id: 39, name: "Holly White", birthday: "Unknown", occupations: ["Infant"], status: "Alive", nickname: "Holly", imageURL: "https://pmctvline2.files.wordpress.com/2013/09/breaking-bad-elanor-anne-wenrich-325.jpg?w=325&h=240", appearances: [2, 3, 4, 5] ),
+        ]
+        
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [MockURLProtocol.self]
+        let urlSession = URLSession(configuration: configuration)
+        let mockImage = getImageFromTestBundle(name: "39.jpg")
+        let mockImageData: Data = mockImage.jpegData(compressionQuality: 1.0)!
+        MockURLProtocol.requestHandler = { request in
+            (HTTPURLResponse(), mockImageData)
+        }
+
+        controller = CharactersController(_characters: Published(initialValue: characters))
+        controller.urlSession = urlSession
+
+        guard let character = controller.characters.last else {
+            XCTFail("Unable to get the last character from controller")
+            return
+        }
+        // Clear out any downloaded image for this character
+        clearDownloadedImage(for: character)
+        
+        // Get a starting point for images
+        let startingImages = controller.images
+        
+        let placeholderImage = Image("BB-Placeholder")
+        
+        let result = expectValue(of: controller.$images.eraseToAnyPublisher(),
+                                 equals: [ { if $0.count > startingImages.count {
+                                                let images = $0 as [Int: Image]
+                                                return images[character.char_id] != nil
+                                            }
+                                            return false } ])
+        
+        // When requesting a character image
+        let characterImage = controller.characterImage(for: character, placeHolder: placeholderImage)
+        
+        // Then the placeholder image should be returned when no character image is available & the image downloaded
+        XCTAssertEqual(characterImage, placeholderImage, "Expected a placeholder")
+        
+        // Image should be downloaded
+        wait(for: [result.expectation], timeout: 5)
+
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
+        }
+    }
+    
+    private func getImageFromTestBundle(name: String) -> UIImage {
+        let bundles = Bundle.allBundles
+        guard let testBundle = bundles.first(where: { $0.bundleIdentifier == "com.arkemm.BreakingBadTests"}) else {
+            XCTFail("Could not find test bundle")
+            return UIImage()
+        }
+        let fileURL = testBundle.resourceURL!.appendingPathComponent(name)
+        return UIImage.init(contentsOfFile: fileURL.path)!
+    }
+    
+    private func clearDownloadedImage(for character: BBCharacter) {
+        if controller.images[character.char_id] != nil {
+            controller.removeImage(id: character.char_id)
+        }
+        let filename = character.imageURL.uppercased().contains("PNG") ? "\(character.char_id).png" : "\(character.char_id).jpg"
+        let imageURL = controller.characterImageFolderURL().appendingPathComponent(filename)
+        let fm = FileManager.default
+        if fm.fileExists(atPath: imageURL.path) {
+            do {
+                try fm.removeItem(at: imageURL)
+            } catch {
+                XCTFail("Failed to remove \(imageURL.path).  Error: \(error.localizedDescription)")
+            }
         }
     }
 

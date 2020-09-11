@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI      // Don't like this dependency on SwiftUI in the controller!.  Needs refactoring.
 
 class CharactersController: ObservableObject {
     @Published public private(set) var characters: [BBCharacter] {
@@ -14,10 +15,18 @@ class CharactersController: ObservableObject {
             objectWillChange.send()
         }
     }
+    @Published public internal(set) var images: [Int: Image] {
+        willSet {
+            objectWillChange.send()
+        }
+    }
     var urlSession = URLSession.shared
+    
+    private var isLoadingImage = [Int: Bool]()
 
-    internal init(_characters: Published<[BBCharacter]> = Published(initialValue: [])) {
+    internal init(_characters: Published<[BBCharacter]> = Published(initialValue: []), _images: Published<[Int: Image]> = Published(initialValue: [:])) {
         self._characters = _characters
+        self._images = _images
     }
     
     func loadData() {
@@ -49,6 +58,108 @@ class CharactersController: ObservableObject {
             return Array(filtered.filter { $0.appearances.contains(season) } )
         }
         return filtered
+    }
+}
+
+// Image related functions.  Refactor to UI level to remove dependency on SwiftUI in the controller!!!
+
+extension CharactersController {
+    
+    func characterImage(for character: BBCharacter, placeHolder: Image) -> Image {
+        if let image = images[character.char_id] {
+            return image
+        } else {
+            // Download the image
+            DispatchQueue.global().async {
+                self.getCharacterImage(for: character)
+            }
+            // Return the placeholder image
+            return placeHolder
+        }
+    }
+
+    internal func characterImageFolderURL() -> URL {
+        let fm = FileManager.default
+        let imageDirectoryURL = fm.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("CharacterImages", isDirectory: true)
+        return imageDirectoryURL
+    }
+    
+    private func getCharacterImage(for character: BBCharacter) {
+        let identifier = character.char_id
+        
+        // Is this image already being loaded
+        if isLoadingImage[identifier] == true { return }
+        
+        // Is there already an image available for this character?
+        if images.keys.contains(identifier) { return }
+
+        // Is the format of the image jpg or png
+        let fileType: String
+        if character.imageURL.uppercased().contains(".JPG") {
+            fileType = ".jpg"
+        } else {
+            fileType = ".png"
+        }
+
+        let fm = FileManager.default
+        let folderURL = characterImageFolderURL()
+        
+        if fm.fileExists(atPath: folderURL.path) == false {
+            // Create the character images folder
+            do {
+                try fm.createDirectory(atPath: folderURL.path, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                print("Could not create character image folder: \(error.localizedDescription)")
+                return
+            }
+        }
+        // Create a filename for saving the image
+        let fileURL = folderURL.appendingPathComponent("\(identifier)\(fileType)")
+        
+        // See if there's already an image downloaded
+        if fm.fileExists(atPath: fileURL.path) {
+            DispatchQueue.main.async {
+                // Use the image
+                self.images[identifier] = Image(uiImage: UIImage.init(contentsOfFile: fileURL.path)!)
+            }
+            return
+        }
+        
+        // No image yet, so download it
+        isLoadingImage[identifier] = true
+        
+        let request = CharacterImageRequest()
+        let loader = APIRequestLoader(apiRequest: request)
+        loader.loadAPIRequest(requestData: character.imageURL) { (img, error) in
+            if let error = error {
+                // Handle the error as appropriate.  Here, the error is just printed.
+                print("Error loading BB character image: \(error.localizedDescription)")
+                self.isLoadingImage[identifier] = false
+                return
+            } else if let optionalImg = img, let img = optionalImg {
+                do {
+                    // Save the image ready for use in the app
+                    switch fileType {
+                    case ".jpg":
+                        try img.jpegData(compressionQuality: 1.0)?.write(to: fileURL, options: .atomic)
+                    default:
+                        try img.pngData()?.write(to: fileURL, options: .atomic)
+                    }
+                } catch {
+                    // Handle the error or make this a throwing func & bubble up
+                    print("Error saving file \(fileURL.path) - error: \(error)")
+                    self.isLoadingImage[identifier] = false
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    // Use the image
+                    self.images[identifier] = Image(uiImage: img)
+                    self.isLoadingImage[identifier] = false
+                }
+            }
+            
+        }
     }
 }
 
