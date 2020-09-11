@@ -159,7 +159,7 @@ class CharacterControllerTests: XCTestCase {
                                             return false } ])
         
         // When requesting a character image
-        let characterImage = controller.characterImage(for: character, placeHolder: placeholderImage)
+        let characterImage = controller.characterImage(for: character, placeholder: placeholderImage)
         
         // Then the placeholder image should be returned when no character image is available & the image downloaded
         XCTAssertEqual(characterImage, placeholderImage, "Expected a placeholder")

@@ -16,6 +16,8 @@ struct MasterView: View {
     @State private var filter: String = ""
     @State private var season: Int? = nil
     
+    private let placeholder = Image.init("BB-Placeholder")
+    
     var body: some View {
         let filteredCharacters = controller.filteredCharacters(with: filter, season: season)
         return VStack(alignment:.leading, spacing: 8) {
@@ -36,7 +38,14 @@ struct MasterView: View {
             List(filteredCharacters, id: \.self) { character in
                 NavigationLink(destination: DetailView(selectedCharacterId: self.$selectedCharacterId),
                                tag: "\(character.char_id)", selection: self.$selectedCharacterId ) {
-                                Text("\(character.name)")
+                                HStack {
+                                    self.controller.characterImage(for: character, placeholder: self.placeholder)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 44, height: 44, alignment: .center)
+                                        .cornerRadius(6)
+                                    Text(character.name)
+                                }
                 }.onTapGesture {
                     self.selectedCharacterId = "\(character.char_id)"
                 }

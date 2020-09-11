@@ -65,7 +65,7 @@ class CharactersController: ObservableObject {
 
 extension CharactersController {
     
-    func characterImage(for character: BBCharacter, placeHolder: Image) -> Image {
+    func characterImage(for character: BBCharacter, placeholder: Image) -> Image {
         if let image = images[character.char_id] {
             return image
         } else {
@@ -74,7 +74,7 @@ extension CharactersController {
                 self.getCharacterImage(for: character)
             }
             // Return the placeholder image
-            return placeHolder
+            return placeholder
         }
     }
 
