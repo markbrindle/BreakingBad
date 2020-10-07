@@ -36,8 +36,8 @@ struct MasterView: View {
             }.padding([.leading, .trailing])
             SearchBar(text: $filter)
             List(filteredCharacters, id: \.self) { character in
-                NavigationLink(destination: DetailView(selectedCharacterId: self.$selectedCharacterId),
-                               tag: "\(character.char_id)", selection: self.$selectedCharacterId ) {
+                NavigationLink(destination: DetailView(character: character),
+                               tag: "\(character.char_id)", selection: self.$selectedCharacterId) {
                                 HStack {
                                     self.controller.characterImage(for: character, placeholder: self.placeholder)
                                         .resizable()

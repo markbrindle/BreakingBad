@@ -1,51 +1,38 @@
 //
-//  DetailView.swift
+//  CharacterView.swift
 //  BreakingBad
 //
-//  Created by Mark Brindle on 10/09/2020.
+//  Created by Mark Brindle on 11/09/2020.
 //  Copyright © 2020 ARKEMM Software Limited. All rights reserved.
 //
 
 import SwiftUI
 
-struct DetailView: View {
-
-    @EnvironmentObject var controller: CharactersController
-    
+struct CharacterView: View {
     var character: BBCharacter
     
-    @State private var flipped = false
-    
-    let placeholder = Image("BB-Placeholder")
+    @EnvironmentObject var controller: CharactersController
+    let placeholder: Image
     
     var body: some View {
-        return Color.init("Baize")
-            .edgesIgnoringSafeArea(.all)
-            .overlay (
-                ZStack {
-                    CharacterView(character: character, placeholder: placeholder)
-                        .opacity(self.flipped ? 0 : 1)
-                        .animation(.default)
-                    CharacterDetailView(character: character)
-                        .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 10, z: 0))
-                        .opacity(self.flipped ? 1 : 0)
-                        .animation(.default)
+        let img = controller.characterImage(for: character, placeholder: placeholder)
+        return Color.init("CardFront")
+            .overlay(
+                VStack(alignment: .center) {
+                    img
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(8)
+                        .padding()
+                    Text(character.name)
+                        .font(.largeTitle)
                 }
-                .cornerRadius(12)
-                .padding()
-                .clipped()
-                .rotation3DEffect(Angle(degrees: self.flipped ? -180 : 0), axis: (x: 0, y: 10, z: 0))
-                .animation(.default)
-                .onTapGesture {
-                    self.flipped.toggle()
-                }
-        ).navigationBarTitle(Text("Character card"), displayMode: .inline)
+        )
     }
-    
 }
 
 #if DEBUG
-struct DevailView_Previews: PreviewProvider {
+struct CharacterView_Previews: PreviewProvider {
     static let characters = [
         BBCharacter(char_id: 1, name: "Walter White", birthday: "01 01 1970", occupations: ["High School Chemistry Teacher", "Meth King Pin"], status: "Presumed dead", nickname: "Heisenberg", imageURL: "https://images.amcnetworks.com/amc.com/wp-content/uploads/2015/04/cast_bb_700x1000_walter-white-lg.jpg", appearances: [1,2,3,4,5] ),
         
@@ -67,4 +54,3 @@ struct DevailView_Previews: PreviewProvider {
     }
 }
 #endif
-

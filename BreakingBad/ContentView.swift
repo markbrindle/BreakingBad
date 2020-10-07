@@ -26,7 +26,11 @@ struct ContentView: View {
         NavigationView {
             MasterView(selectedCharacterId: $selectedCharacterId)
                 .navigationBarTitle(Text("Characters"))
-            DetailView(selectedCharacterId: $selectedCharacterId)
+            if controller.characters.isEmpty {
+                EmptyView()
+            } else {
+                DetailView(character: controller.characters.first!)
+            }
         }
         .onAppear(perform: controller.loadData)
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
