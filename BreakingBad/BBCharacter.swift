@@ -16,7 +16,7 @@ struct BBCharacter {
     let status: String
     let nickname: String
     let imageURL: String
-    let appearances: [Int]
+    let appearances: [Int]?
 
     static func codingKeyMapper(path: [CodingKey]) -> CodingKey {
         if path.count == 2 {

@@ -479,9 +479,7 @@ class CharacterControllerTests: XCTestCase {
                         "img": "https://vignette.wikia.nocookie.net/breakingbad/images/b/b3/StaceyEhrmantraut.png/revision/latest?cb=20150310150049",
                         "status": "?",
                         "nickname": "Stacey",
-                        "appearance": [
-
-                        ],
+                        "appearance": null,
                         "portrayed": "Kerry Condon",
                         "category": "Better Call Saul",
                         "better_call_saul_appearance": [
