@@ -22,7 +22,6 @@ struct CharacterView: View {
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .cornerRadius(8)
                         .padding()
                     Text(character.name)
                         .font(.largeTitle)

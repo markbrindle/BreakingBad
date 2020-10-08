@@ -16,10 +16,10 @@ struct DetailView: View {
     
     @State private var flipped = false
     
-    let placeholder = Image("BB-Placeholder")
+    let placeholder = Image("HatAndBeard")
     
     var body: some View {
-        return Color.init("Baize")
+        return Color.init("bb_Background")
             .edgesIgnoringSafeArea(.all)
             .overlay (
                 ZStack {

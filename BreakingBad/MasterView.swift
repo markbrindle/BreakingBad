@@ -16,9 +16,11 @@ struct MasterView: View {
     @State private var filter: String = ""
     @State private var season: Int? = nil
     
-    private let placeholder = Image.init("BB-Placeholder")
+    private let placeholder = Image.init("HatAndBeard")
     
     var body: some View {
+        UITableView.appearance().backgroundColor = UIColor(named: "bb_PalerBackground")
+
         let filteredCharacters = controller.filteredCharacters(with: filter, season: season)
         return VStack(alignment:.leading, spacing: 8) {
             Text("Season filter")
@@ -33,6 +35,8 @@ struct MasterView: View {
                     filterButton(label: "Season 4")
                     filterButton(label: "Season 5")
                 }
+                .accentColor(Color(UIColor(named: "Baize")!))
+//                .accentColor(Color(UIColor.systemGreen))
             }.padding([.leading, .trailing])
             SearchBar(text: $filter)
             List(filteredCharacters, id: \.self) { character in
@@ -46,10 +50,13 @@ struct MasterView: View {
                                         .cornerRadius(6)
                                     Text(character.name)
                                 }
-                }.onTapGesture {
+                }
+                .accentColor(Color(UIColor(named: "bb_Background")!))
+                .onTapGesture {
                     self.selectedCharacterId = "\(character.char_id)"
                 }
             }
+            .background(Color("bb_Background"))
         }
     }
     
@@ -60,11 +67,11 @@ struct MasterView: View {
         .padding(6)
         .frame(minWidth: 44)
         .cornerRadius(8)
-        .shadow(radius: 4)
+//        .shadow(radius: 4)
     }
 }
 
-#if DEBUG
+#if DEBUG && targetEnvironment(simulator)
 struct MasterView_Previews: PreviewProvider {
     static let characters = [
          BBCharacter(char_id: 1, name: "Walter White", birthday: "01 01 1970", occupations: ["High School Chemistry Teacher", "Meth King Pin"], status: "Presumed dead", nickname: "Heisenberg", imageURL: "https://images.amcnetworks.com/amc.com/wp-content/uploads/2015/04/cast_bb_700x1000_walter-white-lg.jpg", appearances: [1,2,3,4,5] ),
@@ -82,6 +89,11 @@ struct MasterView_Previews: PreviewProvider {
             NavigationView {
                 MasterView(selectedCharacterId: .mock("0"))
                     .environment(\.colorScheme, .dark)
+            }.environmentObject(CharactersController(_characters: Published(initialValue: characters)))
+            
+            NavigationView {
+                MasterView(selectedCharacterId: .mock("0"))
+                    .previewAsScreen()
             }.environmentObject(CharactersController(_characters: Published(initialValue: characters)))
         }
     }
