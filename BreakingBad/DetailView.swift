@@ -19,7 +19,7 @@ struct DetailView: View {
     let placeholder = Image("HatAndBeard")
     
     var body: some View {
-        return Color.init("bb_Background")
+        return Color.init(UIColor.systemBackground)
             .edgesIgnoringSafeArea(.all)
             .overlay (
                 ZStack {

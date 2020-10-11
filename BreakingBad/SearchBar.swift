@@ -22,6 +22,21 @@ struct SearchBar: UIViewRepresentable {
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             text = searchText
         }
+        
+        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            text = ""
+            tidyUp(searchBar)
+        }
+
+        func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            searchBar.setShowsCancelButton(true, animated: true)
+        }
+        
+        private func tidyUp(_ searchBar: UISearchBar) {
+            searchBar.resignFirstResponder()
+            searchBar.setShowsCancelButton(false, animated: true)
+            searchBar.endEditing(true)
+        }
     }
     
     func makeCoordinator() -> Coordinator { Coordinator(text: $text) }
@@ -36,11 +51,13 @@ struct SearchBar: UIViewRepresentable {
     func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
         uiView.text = text
     }
+    
 }
 
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        Text("Hello, World!")
+        SearchBar(text: .mock("Breaking Bad!"))
+            .previewAsComponent()
     }
 }

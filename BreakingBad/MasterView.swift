@@ -19,9 +19,10 @@ struct MasterView: View {
     private let placeholder = Image.init("HatAndBeard")
     
     var body: some View {
-        UITableView.appearance().backgroundColor = UIColor(named: "bb_PalerBackground")
+        UITableView.appearance().backgroundColor = UIColor(named: "bb_Background")
 
         let filteredCharacters = controller.filteredCharacters(with: filter, season: season)
+        
         return VStack(alignment:.leading, spacing: 8) {
             Text("Season filter")
                 .font(.title)
@@ -36,7 +37,6 @@ struct MasterView: View {
                     filterButton(label: "Season 5")
                 }
                 .accentColor(Color(UIColor(named: "Baize")!))
-//                .accentColor(Color(UIColor.systemGreen))
             }.padding([.leading, .trailing])
             SearchBar(text: $filter)
             List(filteredCharacters, id: \.self) { character in
@@ -51,12 +51,11 @@ struct MasterView: View {
                                     Text(character.name)
                                 }
                 }
-                .accentColor(Color(UIColor(named: "bb_Background")!))
                 .onTapGesture {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     self.selectedCharacterId = "\(character.char_id)"
                 }
             }
-            .background(Color("bb_Background"))
         }
     }
     
@@ -67,7 +66,6 @@ struct MasterView: View {
         .padding(6)
         .frame(minWidth: 44)
         .cornerRadius(8)
-//        .shadow(radius: 4)
     }
 }
 

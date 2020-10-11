@@ -191,9 +191,9 @@
 				4DB40735250ACDEC00643636 /* MasterView.swift */,
 				4DFA185D24F41DED00AE9569 /* Preview Content */,
 				4DFA185724F41DEB00AE9569 /* SceneDelegate.swift */,
+				4DC6FAE0252F7E2C00CC90D8 /* ScreenPreview.swift */,
 				4DB40733250ACAB900643636 /* SearchBar.swift */,
 				4D227F0F2505243D00909D8A /* Utilities */,
-				4DC6FAE0252F7E2C00CC90D8 /* ScreenPreview.swift */,
 			);
 			path = BreakingBad;
 			sourceTree = "<group>";

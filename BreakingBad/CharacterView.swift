@@ -15,20 +15,36 @@ struct CharacterView: View {
     let placeholder: Image
     
     var body: some View {
+
         let img = controller.characterImage(for: character, placeholder: placeholder)
-        return Color.init("CardFront")
+
+        return Color.init("bb_Background")
             .overlay(
                 VStack(alignment: .center) {
+                    Spacer()
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .padding()
                     Text(character.name)
                         .font(.largeTitle)
+                    Spacer()
+                    HStack {
+                        Spacer()
+                    Image("oval_arrow")
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 75, height: 30)
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Color("Baize"))
+                    }
+                    .padding([.trailing, .bottom])
                 }
         )
     }
 }
+
+
 
 #if DEBUG
 struct CharacterView_Previews: PreviewProvider {

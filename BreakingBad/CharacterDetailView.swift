@@ -12,9 +12,10 @@ struct CharacterDetailView: View {
     var character: BBCharacter
     
     var body: some View {
-        Color.init("CardBack")
+        Color.init("bb_Background")
             .overlay(
                 VStack {
+                    Spacer()
                     Text(character.name)
                         .font(.largeTitle)
                     Text("Occupations: \(character.occupations.description)")
@@ -25,6 +26,19 @@ struct CharacterDetailView: View {
                     }
                     Text("Nickname: \(character.nickname)")
                     Text("Status: \(character.status)")
+                    Spacer()
+                    HStack {
+                        Image("oval_arrow")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 75, height: 30)
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(Color("Baize"))
+                            .rotation3DEffect(.degrees(180),
+                                              axis: (x: 0.0, y: 1.0, z: 0.0))
+                        Spacer()
+                    }
+                    .padding([.leading, .bottom])
                 }
         )
     }
