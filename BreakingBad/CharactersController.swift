@@ -10,6 +10,12 @@ import Foundation
 import SwiftUI      // Don't like this dependency on SwiftUI in the controller!.  Needs refactoring.
 
 class CharactersController: ObservableObject {
+    
+    @Published public private(set) var loading = false {
+        willSet {
+            objectWillChange.send()
+        }
+    }
     @Published public private(set) var characters: [BBCharacter] {
         willSet {
             objectWillChange.send()
@@ -35,6 +41,7 @@ class CharactersController: ObservableObject {
         // Call out to get BB characters from https://breakingbadapi.com/api/characters
         let request = CharacterRequest()
         let loader = APIRequestLoader(apiRequest: request, urlSession: urlSession)
+        loading = true
         loader.loadAPIRequest(requestData: nil) { (bbCharacters, error) in
             if let error = error {
                 // Handle the error as appropriate.  Here, the error is printed.
@@ -47,6 +54,7 @@ class CharactersController: ObservableObject {
             
             DispatchQueue.main.async {
                 self.characters = results
+                self.loading = false
             }
             
         }

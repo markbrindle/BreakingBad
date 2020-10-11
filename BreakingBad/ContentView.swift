@@ -21,21 +21,23 @@ struct ContentView: View {
     @ObservedObject var controller: CharactersController
     
     @State private var selectedCharacterId: String?
-
+    
     var body: some View {
-        NavigationView {
-            MasterView(selectedCharacterId: $selectedCharacterId)
-                .navigationBarTitle(Text("Characters"))
-            if controller.characters.isEmpty {
-                EmptyView()
-            } else {
-                DetailView(character: controller.characters.first!)
+        LoadingIndicatorView(isDisplayed: controller.loading) {
+            NavigationView {
+                MasterView(selectedCharacterId: $selectedCharacterId)
+                    .navigationBarTitle(Text("Characters"))
+                if controller.characters.isEmpty {
+                    EmptyView()
+                } else {
+                    DetailView(character: controller.characters.first!)
+                }
             }
+//            .onAppear(perform: controller.loadData)
+            .navigationViewStyle(DoubleColumnNavigationViewStyle())
+            .environmentObject(controller)
         }
-        .onAppear(perform: controller.loadData)
-        .navigationViewStyle(DoubleColumnNavigationViewStyle())
-        .environmentObject(controller)
-    }
+    }    
 }
 
 #if DEBUG && targetEnvironment(simulator)
