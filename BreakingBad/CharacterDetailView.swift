@@ -12,20 +12,40 @@ struct CharacterDetailView: View {
     var character: BBCharacter
     
     var body: some View {
-        Color.init("bb_Background")
+        let appearances:[Int] = character.appearances ?? []
+        return Color.init("bb_Background")
             .overlay(
-                VStack {
+                VStack(spacing: 20) {
                     Spacer()
-                    Text(character.name)
-                        .font(.largeTitle)
-                    Text("Occupations: \(character.occupations.description)")
-                    VStack {
+
+                    VStack(spacing: 8) {
+                        Text(character.name)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.center)
+                        
+                        Text("Nickname:")
+                        Text("\(character.nickname)")
+                            .font(.title)
+                    }
+                    
+                    VStack(spacing: 8) {
+                        Text("Occupation\(character.occupations.count > 1 ? "s" : ""):")
                         ForEach(character.occupations, id: \.self) { occupation in
-                            Text("\t\(occupation)")
+                            Text("\(occupation)")
+                                .font(.title)
+                                .multilineTextAlignment(.center)
                         }
                     }
-                    Text("Nickname: \(character.nickname)")
+
                     Text("Status: \(character.status)")
+                        .font(.title)
+                    HStack {
+                        Text("Appeared in season:")
+                        ForEach(appearances, id: \.self) { season in
+                            Text("\(season)")
+                        }
+                    }
                     Spacer()
                     HStack {
                         Image("oval_arrow")
@@ -56,6 +76,9 @@ struct CharacterDetailView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
+            NavigationView {
+                CharacterDetailView(character: characters[0])
+            }.environmentObject(CharactersController(_characters: Published(initialValue: characters)))
             NavigationView {
                 MasterView(selectedCharacterId: .mock("11"))
             }.environmentObject(CharactersController(_characters: Published(initialValue: characters)))

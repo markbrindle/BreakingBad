@@ -54,10 +54,11 @@ struct SearchBar: UIViewRepresentable {
     
 }
 
-
+#if DEBUG && targetEnvironment(simulator)
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
         SearchBar(text: .mock("Breaking Bad!"))
             .previewAsComponent()
     }
 }
+#endif

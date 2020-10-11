@@ -42,7 +42,7 @@ struct LoadingIndicatorView<Content>: View where Content: View {
                         Text("Say my name")
                         LoadingIndicator(style: .large)
                     }
-                    .frame(width: geometry.size.width / 2.0, height: 200.0)
+                    .frame(width: geometry.size.width * 0.75, height: 200.0)
                     .background(Color.secondary.colorInvert())
                     .foregroundColor(Color("Baize"))
                     .cornerRadius(20)
